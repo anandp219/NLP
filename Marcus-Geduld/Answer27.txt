@@ -1,0 +1,23 @@
+ Marcus GeduldThe goal of many programmers is to move towards descriptive programming and away from prescriptive programming, which means telling the computer the problem you want to solve rather than telling it how to solve it. "Make me a peanut-butter sandwich" vs "Take the loaf of bread out of the cupboard, remove two slices, put them on a plate ..."Let's say I have a Javascript array of objects, each representing a person, and I want to convert it to a list of phone numbers. Here's a for-loop (prescriptive) version: 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+var contacts = [  {first: 'John', last: 'Smith', phone: '123-4567'}, {first: 'Mary', last: 'Jones', phone: '456-7890'}, ...]; // goal: ['123-456'7, '456-7890', ... ]var phoneNumbers = [];for (let i=0, len=contacts.length; i < len; i++) { phoneNumbers.push(contacts[i].phone);}There's a lot going on there that I don't care about. I don't care about the variable i, and yet I have to define it, test it, and increment it. I don't care about the mechanics of grabbing an element from the array, and yet I have to access each element using i as an index. Etc. All I really care about is, for each array element, mapping this {first: 'John', last: 'Smith', phone: '123-4567'} to this 123-4567, but I'm stuck telling the computer how to do it.Here's a descriptive version:1
+2
+3
+4
+5
+6
+7
+var contacts = [  {first: 'John', last: 'Smith', phone: '123-4567'}, {first: 'Mary', last: 'Jones', phone: '456-7890'}, ...];var phoneNumbers = contacts.map(contact => contact.phone);"contact => contact.phone" means map each contact object to just its phone field. Of course, the first version is easier to understand if you don't know about (or aren't used to) map() or fat-arrow functions*, but once you have some experience with these constructs, they're much easier to read. * Fat arrow functions--functions with => in them--are new to the latest version of Javascript, though they've been in other languages for years. If you're new to them, you may find this longer version easier to understand. It does the same thing:1
+2
+3
+var phoneNumbers = contacts.map(function(contact) { return contact.phone;});
