@@ -6,6 +6,7 @@ import shutil
 import math
 import pickle
 
+
 data={}
 shutil.rmtree('corpus')
 shutil.rmtree('pickle')

@@ -1,0 +1,78 @@
+ totally unnecessary. I'd take it out.Given that you're using a StringBuffer, I don't see the benefit of concatenating a string first and then inserting the string. That will create a new string. I would just add the strings individually.Clean up time!First, I'll fix the style issues. I'm also going to put opening braces on the same line. This is my personal preference and the style that both Google and Facebook use. It's very much just personal preference; don't let anyone tell you it's bad to do otherwise. 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+String compress(String input) { StringBuffer result = new StringBuffer(); for (int index = 0; index < input.length(); index++) { char curr = input.charAt(index); int frequency = 0; // keep incrementing frequency while the character is the same as the current one while (index < input.length() && input.charAt(index) == curr) { index++; frequency++; }  // decrement index so no character is missed index--;  result.append(curr); if (frequency > 1) { result.append(frequency); } } return result.toString();}Getting better already!Now, let's fix the correctness issues. 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+String compress(String input) { StringBuffer result = new StringBuffer(); for (int index = 0; index < input.length(); index++) {  char curr = input.charAt(index); int frequency = 0; // keep incrementing frequency while the character is the same as the current one while (index < input.length() && input.charAt(index) == curr) { index++; frequency++; }  // decrement index so no character is missed index--;  result.append(curr); result.append(frequency); } return result.length() < input.length() ? result.toString() : input;}That wasn't so hard.Now, let's fix the readability issue with the nested loops. 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+String compress(String input) { StringBuffer result = new StringBuffer(); int frequency = 1; char previous = input.charAt(0); for (int i = 1; i < input.length(); i++) { if (input.charAt(i) == previous) { frequency++; } else { result.append(input.charAt(i - 1)); result.append(frequency); previous = input.charAt(i); frequency = 1; } } result.append(previous); result.append(frequency); return result.length() < input.length() ? result.toString() : input;}If you want to, you can remove the usage of the "previous" variable above. It's not actually strictly necessary. You can also look forward instead of backward: 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+String compress(String input) { StringBuffer result = new StringBuffer(); int frequency = 0; for (int i = 0; i < input.length(); i++) { frequency++; if (i + 1 >= input.length() || input.charAt(i) != input.charAt(i + 1)) { result.append(input.charAt(i)); result.append(frequency); frequency = 0; } } return result.length() < input.length() ? result.toString() : input;}In either case, this now looks an awful lot like what's in the book.

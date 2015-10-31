@@ -1,0 +1,34 @@
+ red dot on the previous image I've shown you. The Level 1 calorimeter gets data from the Liquid-Argon and Tile Calorimeters of the detector, and does some specific processing such as calculating the amount of energy in various regions using a sliding-window algorithm, or doing a very crude clustering algorithm to identify regions of more energy density. The job of the CTP is to take the information from the Calorimeter, from the Muons, and combine it into a Global Level-1 Accept (L1A) that determines whether the event it currently looks at goes to Level-2 or if we just throw it away because it's not interesting enough.The end goal is to filter 40 million events per second to 1000 events per second, which can be recorded on magnetic tape.So what are ROOT files? [8]Well, ROOT files are... more or less... binary databases. They contain information about itself (description) as well as the raw data (data). Everything inside a ROOT file is binary for various computing reasons I'd rather not get into. Because of this, a program that understands how to read a ROOT file knows that all it needs to do is open it up and read the description to understand enough about it. This means that we can open and read ROOT files in O(1) time since it doesn't matter how large or small the file is, it only reads in some number of bytes to understand the structure of the file you've given it, and then contains pointers to more information if you request it. A ROOT file is like a database, and it contains lots of TDirectories and TTrees. A TTree is like a database table. A TDirectory is like a collection of database tables. A TTree can have TBranches/TLeaves which are like columns. And the rows are the events. Here is a code example to illustrate some basic structure: 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+kratsg@connect:~/faxbox/LArStudies$ root -b -l PileupSkim_Pythia8_AU2CT10_jetjet_JZ0W_0.root root [0] Attaching file PileupSkim_Pythia8_AU2CT10_jetjet_JZ0W_0.root as _file0...root [1] .lsTFile**		PileupSkim_Pythia8_AU2CT10_jetjet_JZ0W_0.root	 TFile*		PileupSkim_Pythia8_AU2CT10_jetjet_JZ0W_0.root	 KEY: TTree	mytree;1	mytreeroot [2] mytree->ls()OBJ: TTree	mytree	mytree : 0 at: 0x1dc2430root [3] mytree(class TTree*)0x1dc2430Notice how it tells me that the TTree mytree is located in memory at 0x1dc2430. ROOT understands how to find things because it's like a mailman given someone's postal address. Instead of giving the mailman my whole house which is pretty hard to carry, I just give him my address and he knows where to find my house when he needs it.Now, what's inside the TTree? Well, branches, lots of columns of data. We can get a sneakpeak at this in a variety of ways1
+2
+3
+4
+root [4] mytree->GetListOfBranches()(class TObjArray*)0x1dc2580root [5] mytree->GetListOfBranches()->GetEntries()(const Int_t)1050which tells me there are 1,050 columns in my database table. What's one of them?1
+2
+3
+4
+5
+6
+7
+8
+root [6] mytree->GetListOfBranches()->At(0)(const class TObject*)0x20ab610root [7] mytree->GetListOfBranches()->At(0)->GetName()(const char* 0x20ab629)"weight"root [8] mytree->GetListOfBranches()->At(129)->GetName()(const char* 0x241dea0)"Eventshape_rhoKt4EM"root [9] mytree->GetListOfBranches()->At(583)->GetName()(const char* 0x26eb9f0)"jet_AntiKt10TruthTrimmedPtFrac5SmallR30_ZCUT12"and so on. All of these are accessed almost instantaneously because all this information is simply descriptor. It has no idea what the actual data is because everything is retrieved via pointers. Because of this, we can slowly unfold and expand the data at various locations that we care about... and we know where to unpack the data because we know where everything is! We just don't know what it is. So let's see what the value is for some events, such as the ZCUT12 branch we've found.1
+2
+3
+4
+5
+6
+7
+8
+root [13] mytree->GetEntry(0)(Int_t)720490root [15] mytree->GetBranch("jet_AntiKt10TruthTrimmedPtFrac5SmallR30_ZCUT12")(class TBranch*)0x26eb520root [18] mytree->GetBranch("jet_AntiKt10TruthTrimmedPtFrac5SmallR30_ZCUT12")->GetEntry(0)(Int_t)10root [19] mytree->GetBranch("jet_AntiKt10LCTopo_pt")->GetEntry(0)(int_t) 12and so on. The return of the GetEntry function just tells you the size of the data stored at that particular entry. To get things like actual values, you need to grab the TLeaf associated with the TBranch (it's complicated, I know, but you generally get used to it or just write macros so you never deal with actual direct features like accessing a single value). One of the locations in which ROOT shines is that you can chain multiple ROOT files together and then draw histograms and save them to files. Drawing histograms is one of the most common things we can do and can be as easy as1
+2
+root [0] mytree->Draw("jet_AntiKt10LCTopo_pt")root [1] mytree->Draw("jet_AntiKt10LCTopo_pt:jet_AntiKt10LCTopo_m")the first draws a 1D histogram of the Anti-Kt R=1.0 (clustered from topological clusters in the detector) jet's pt. The second is a 2D histogram of the jet pt versus jet mass. The histogrammed data could be stored back in a ROOT file to access in another script to draw the plots and save them to file. Because of the nature of the ROOT file, we can access histograms as fast as we want independent of the size of the ROOT file because it stores pointers to the histogram data.Now, as you start getting significantly more complicated data, and the nature of the ROOT files able to store pointers to other data, you'll find that standard databases are ill-equipped to store ROOT data in the first place. For example, an Anti-Kt R=1.0 locally calibrated jet from topological clusters could be groomed with Kt, R=0.3 subjets. Rather than storing the subjet information directly under the jet, the jet stores pointers to the subjet information. This means that the same data could be pointed to by multiple sources in an effort to minimize storage space and maximize efficiency. I once tried to take a ROOT file that was 2 gigabytes and store it in a MySQL database (23 gigabytes) and a PostgreSQL database (18 gigabytes). ROOT does a fantastic job with compression and normally databases cannot handle this shit.[1] Welcome to the Worldwide LHC Computing Grid[2] http://cds.cern.ch/record/169540...[3] Large Hadron Collider[4] CERN LHC[5] The Grid: A system of tiers[6] http://atlas.web.cern.ch/Atlas/G...[7] Page on gantep.edu.tr[8] ROOT Files | ROOT[9] TTree[10] TBranch[11] TLeaf

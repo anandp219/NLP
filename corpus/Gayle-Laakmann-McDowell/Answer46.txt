@@ -1,0 +1,17 @@
+.Example 3: O(N)This code counts the number of sequences of 5 characters that are the same.1
+2
+3
+4
+5
+6
+7
+8
+9
+array = array of intscount_5_the_same = 0for i from 0 to array.length - 4: all_the_same = true for j = i + 1 to i + 4: if array[i] != array[j]: all_the_same = false if all_the_same: count_5_the_same += 1This code takes O(N) time, where N is the length of the array.Example 4: O(N^2 log N)This code counts how many times the product of two integers within a sorted array is within the array. 1
+2
+3
+4
+5
+6
+7
+array = array of intscount_product_occurrences = 0for x in array: for y in array: product = x * y if binary_search(array, product): count_product_occurrences += 1This code will take O(N^2 log N) time. That's because the for loops go through O(N^2) iterations, and each iteration does an O(log N) search.There are an infinite number of examples like this. Perhaps you feel like these examples are cheating or bending the rules of the question. Maybe... if you define the question to be as follows: Are all nested for loops O(N^2) where:The outer for loop iterates O(N) timesThe inner for loop iterates O(N) times, for each iteration of the for loopThe outer for loop only does O(1) work, other than the inner for loopThe inner for loop only does O(1) work.In that case, yes, those should be all O(N^2). (Or at least, I can't think of any counter examples, but it's possible I'm missing some additional qualifications.)The important take-away here is to realize that nothing is ever inherently O(N) or O(N^2). N is just a variable and it always has a very specific meaning (although sometimes we infer what it is). Big O is just an equation of variables that reflects the runtime. That equation can be anything and can use any variables.In fact, if you're struggling even a little bit with big O (and even if you're not, this can't hurt): just stop using N as a variable in big O. Seriously. Use logical variable names instead that reflect their meaning.Too many people say "O(N)" when they really mean "linear". Well, linear in what? If you have an array of [equal-length] strings, it's really not clear whether your "N" refers to the array or the string length, or something else. Avoiding N as a variable name will prevent you from making a stupid mistake like this: Sorting a string takes O(N log N) time. So if you have an array of strings and you want to sort all of them, it takes O(N*N log N). Uh... nope. Different Ns. Try again, using S for the string length and A for array length.

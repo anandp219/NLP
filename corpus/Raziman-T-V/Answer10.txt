@@ -1,0 +1,65 @@
+ This problem can be solved using dynamic programming over subsets (using bitmasks).SolutionThe first thing to note is that [math]b_i . This is because, had the inequality not been satisfied, we could have replaced [math]b_i[/math] with [math]1[/math]. This would have resulted in the value of [math]|a_i-b_i|[/math] reducing, without affecting any pairwise gcds. Thus all [math]b_i[/math]s lie between [math]1[/math] and [math]58[/math].One way to make all [math]b_i[/math]s pairwise coprime is by ensuring that prime factors of any element do not divide any other. Since there are only [math]16[/math] primes upto [math]58[/math], we can do dynamic programming over the subsets of these primes.Define [math]\rm{DP}(i,S)[/math] = minimum value of [math]\sum\limits_{j=1}^{i} |a_j-b_j|[/math] on choosing [math]b_j[/math]s such that their only prime factors are the prime numbers in the set [math]S[/math].Let us find a recurrence for [math]\rm{DP}(i,S)[/math]. [math]b_i[/math] can be any number in the range [math]1 \cdots 58[/math] whose prime factors are all in [math]S[/math]. Let [math]j[/math] be one of such numbers, whose prime factors form the set [math]T \subset S[/math]. It is clear that the cost due to the current element is [math]|a_i - j|[/math]. Also, the minimum cost you can obtain from the previous elements is clearly [math]\rm{DP}(i-1,S \setminus T)[/math] since none of the factors of the current element can be used in previous elements. This gives a total of [math]|a_i - j| + \rm{DP}(i-1,S \setminus T)[/math], and minimising it over all [math]j[/math] gives us [math]\rm{DP}(i,S)[/math].The base case of the recurrence is clearly [math]\rm{DP}(0,S) = 0 \;\forall\; S[/math]. With this base case and the above recurrence, [math]\rm{DP}(n,\{2,3,5 \cdots 53\})[/math] gives the minimum cost.ImplementationSubsets are usually represented by bitmasks in dynamic programming. If set [math]S[/math] has elements [math]a_1 \cdots a_n[/math], its subsets can be represented by [math]n[/math]-bit binary numbers. The bijection between subsets and bitmasks is that element [math]a_i[/math] is present in the subset iff the [math]i^{th}[/math] bit of the mask is [math]1[/math]. For example, the subset [math]{a_1, a_3, a_6}[/math] corresponds to the mask [math](100101)_2 = 37[/math] (Bits are read from right to left).We start with the set of primes under 58.1
+int p[16]={2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53};In our solution, we require the factor set for each number. To do this easily, we precompute the factors in mask form. 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+int factormask[59];for(int i=1;i<59;i++){ //Initialise with the empty subset factormask[i]=0; for(int j=0;j<16;j++) { if(i%p[j]==0) { //p[j] is a factor of i //We need to set the jth bit of mask to 1 factormask[i]|=(1<<j); } }}With this done, we can dive into the recurrence. Note that, in addition to the [math]\rm{DP}(i,S)[/math] variable we defined in the solution section, we also need to find the best value of [math]b_i[/math] so that it can be output in the end. For this, along with [math]\rm{DP}(i,S)[/math], we keep another variable [math]b(i,S)[/math] which stores the value of [math]b_i[/math] which gives the minimum for [math]\rm{DP}(i,S)[/math]. We will do the DP by memoised recursion to avoid calculating some unnecessary values. 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+int DP[101][1<<16],b[101][1<<16];memset(DP,-1,sizeof DP);int calc(int i,int mask){ //Base case if(i==0)return 0; //Check for memoisation if(DP[i][mask]!=-1) return DP[i][mask]; //Start by assigning 1 to current element //1 has no prime factors, so mask passed is unchanged DP[i][mask]=calc(i-1,mask) + abs(a[i]-1); b[i][mask]=1; //Now consider all values j from 2 to 58 for(int j=2;j<59;j++) { //Ensure that all factors of j exist in mask : This is true iff (mask&factormask[j]) == factormask[j] if((mask&factormask[j])!=factormask[j]) continue;  //Factors of j can be removed from mask using (mask^factormask[j]) int cur=calc(i-1,mask^factormask[j]) + abs(a[i]-j); if(cur<DP[i][mask]) { //We found a better j DP[i][mask]=cur; b[i][mask]=j; } } return DP[i][mask];}We can now call calc(i,(1<<16)-1) and then build the [math]b_i[/math]s in the end. 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+//(1<<16)-1 is the mask corresponding to all the 16 primesfullmask=(1<<16)-1calc(n,fullmask);//Build the b_i s backwardsvector<int> b_out;for(int i=n,mask=fullmask;i>0;i--){ int cur=b[i][mask]; b_out.push_back(cur);  //Remove the factors of cur from the mask and continue mask^=factormask[cur];}Output b_out in reversed order and we are done.

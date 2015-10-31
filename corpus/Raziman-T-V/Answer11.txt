@@ -1,0 +1,33 @@
+ This problem can be solved using dynamic programming.First, define our DP function as best(i,j) = minimum distance sum for the first i villages on placing j post offices such that there is a post office at village i.Let us see how we can compute best(). We will start with the base case best(i,1). This means that all villages from 1 to i have to be assigned to post office at i. Thus we have1
+2
+3
+4
+5
+6
+best(*,1)=0for i=1 to N for j=1 to i best(i,1)+=dist(i,j) endendHere, dist(i,j) is just the distance between villages i and j.Next let us look at the recurrence for best(i,j) for j>1. Since we know that the last post office is at village i, we just consider all possibilities for the location of the previous post office and take the one which gives the minimum cost1
+2
+3
+4
+5
+6
+7
+8
+for i=1 to N for j=2 to K best(i,j)=best(i-1,j-1) for k=1 to i-2 best(i,j)=min(best(i,j), best(k,j-1)+cost(k,i)) end endendHere, cost(k,i) = minimum distance sum for assigning villages in the range k...i to post offices at village k and i. Note that if we evaluate this naively using a loop from k to i here, the overall complexity of the routine would become O(N^4). We can take care of this by precomputing cost() before the best() recurrence evaluation [1].1
+2
+3
+4
+5
+6
+7
+8
+cost(*,*)=0for i=1 to N for j=i+1 to N for k = i+1 to j-1 cost(i,j)+=min(dist(i,k),dist(j,k)) end endendThus, both cost() and best() can be evaluated in O(N^3) which should be enough for the given constraints.Now what is the final answer? The last post office could be anywhere and the remaining villages have to be sent to it. We just choose the position which gives the minimum sum: 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+ret=best(N,K)for i=1 to N-1 cur=best(i,K) for j=i+1 to N cur+=dist(i,j) end ret=min(cur,ret)endreturn ret[1] There are alternate ways to take care of this without precomputation. One is to interchange the k and j loops in the evaluation of the recurrence for best(). Do you see how evaluating cost(k,i) inside would then not worsen the asymptotic complexity?
