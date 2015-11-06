@@ -1,6 +1,0 @@
- Joshua EngelYou use JavaCompiler (Java Platform SE 7 ). You get an instance of it via ToolProvider. The code (from the javadoc) looks something like this: 1
-2
-3
-4
-5
-Files[] files1 = ... ; // input for first compilation task JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null); Iterable<? extends JavaFileObject> compilationUnits1 = fileManager.getJavaFileObjectsFromFiles(Arrays.asList(files1));compiler.getTask(null, fileManager, null, null, null, compilationUnits1).call();Note that the compiler could be null. In fact, it probably will be if you're running with anything other than the Java Development Kit (i.e. not just the Java Runtime Environment). If you want to be certain that a Java compiler exists, you'll have to deliver it with your code.Second note: the unless you're trying to build a development environment, you're probably doing the wrong thing if you try to invoke a Java compiler. And if you're trying to build a development environment... well, you'd probably be much better off using somebody else's. It's your code; you do what you want. But generally, you should be writing code, rather than writing code that writes code. The latter is more fun but far less useful than most people imagine.

@@ -1,1 +1,48 @@
- Given a right-angle triangle with side lengths [math]x[/math] and [math]y[/math] in appropriate directions. There are two different angles you can calculate:[math]\theta_\text{horiz} = \arctan\left(\frac{y}{x}\right)[/math][math]\theta_\text{vert} = \arctan\left(\frac{x}{y}\right)[/math]and unsurprisingly, you will find that [math]\theta_\text{horiz} + \theta_\text{vert} = \frac{\pi}{2} = 90^\circ[/math]. As the problem is currently written, it's not clear if there are pictures associated with it or whether they want you to find the angle with respect to horizon or vertical for each part.
+ Yes, there is. Why is anyone telling you there isn't? Demo (mouseover image to see what happens). ZERO JAVASCRIPT INVOLVED.main.css 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+.cover {  background: url(some_image.gif) no-repeat 0px 0px;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; width: 50px; height: 50px; transition: all .2s ease-in-out;}.cover:hover { transform: translate(175px, 175px) scale(8);}index.html1
+2
+<link rel="stylesheet" type="text/css" href="main.css"><div class="cover"></div>Code specifically for the demo 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+<style> .cover {  background: url(some_image_url) no-repeat 0px 0px;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; width: 100px; height: 100px; transition: all 0.2s ease-in-out; display: inline-block; position: relative;}.cover:active { transform: scale(8);}.cover-container { overflow: hidden; width:100px; height:100px; border:1px solid white; margin: 25px 0 0 25px;}</style><div class="cover-container"> <div class="cover"></div></div>

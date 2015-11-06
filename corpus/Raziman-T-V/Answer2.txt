@@ -1,1 +1,30 @@
- Bhairon Singh Shekhawat, who was the sitting vice president.Shekhawat was a BJP member who became vice president in 2002 with the support of NDA. He had previously been the chief minister of Rajasthan thrice - once as a member of Janata Party, and twice as a member of BJP. By the time the 2007 presidential elections rolled around, NDA had lost power at the centre. The ruling UPA coalition nominated Pratibha Patil for the post of president and Shekhawat ran against her as an independent candidate with the backing of NDA. Naturally, he lost.
+ This problem can be solved using the Convex hull trick.Consider the square of the distance from a producer at [math](a,b)[/math] to a point on the x-axis [math](x,0)[/math] where a consumer could be located. This is equal to [math](a-x)^2+b^2=a^2+b^2+x^2-2ax[/math]. We need to find the [math](a,b)[/math] pair for which this quantity is minimised. Since [math]x^2[/math] is same for all producers once the consumer is fixed, we will try to minimise the remaining quantity [math]f_{(a,b)}(x) = a^2+b^2-2ax[/math] over all [math](a,b)[/math] pairs for given [math]x[/math].First, note that [math]f_{(a,b)}(x)[/math] is a is a linear function of x for each [math](a,b)[/math]. The problem is thus all about picking from a set of lines the line with the lowest height at a certain x-coordinate.Consider the above image as example. We have four lines [math]l_1 \ldots l_4[/math]. Initially, it is [math]l_1[/math] which is the lowest line. Then [math]l_2[/math] takes over, and finally [math]l_4[/math] becomesthe winner. For the given query location [math]x[/math], [math]l_2[/math] is the line with the lowest height at that point.So how do we find the lowest line for the points efficiently?We will make a few observations. First, note that if two lines are parallel, only the lower one ever has any chance to be the lowest line at any point. So discard all but the lowest line out of sets of parallel lines.Next, note that in the figure, the lines which attain minimal height have monotonically decreasing slopes from left to right. This should not be surprising : A line with a higher slope can never become lower than a currently lower line by going further to the right. So we will first sort all the lines in decreasing order of slope.We will now scan this sorted list from left to right and build up the list of lowest lines and the coordinate ranges for which they are lowest. Keep a stack to store the candidate lowest lines. Initially push the first line to the stack. The initial candidate range at which this line is lowest is [math](-\infty,\infty)[/math].While processing an element [math]l[/math], first check the intersection of the line with the line [math]m[/math] at the top of the stack. If the intersection point is before the candidate range at which [math]m[/math] is the lowest, it means that [math]m[/math] can never be the lowest line for any range (This is what happened to [math]l_3[/math] in the above figure) - so pop m off the stack. Continue popping elements till you find a line where the intersection point [math]p[/math] lies in its candidate range. Update the right limit of the candidate range of the line as [math]p[/math], and push the current line to the stack with candidate range [math][p,\infty)[/math].Once this preprocessing is done, finding the lowest line at a given x-coordinate is simple. We can binary search over the ranges of the candidate lines and see which one [math]x[/math] falls in. Alternately, we can sort the x-coordinates of the consumers first and scan the ranges from left to right.Pseudocode: 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+Given : (a[i],b[i]) for i=1 to M : x[j] for j=1 to Nfor i = 1 to M line[i].index = i line[i].slope = -2 a[i] line[i].intercept = a[i]^2 + b[i]^2endsort line[] in decreasing order of slope, breaking ties in increasing order of interceptstack sline[1].range=(-inf,inf)push line[1] to stackfor i = 2:M if slope[i] == slope[i-1] continue while (c = x-coordinate of intersection of line[i] and s.top) <= s.top.range.left pop from s s.top.range.right=c line[i].range=(c,inf) push line[i] to stackendfor j = 1 to N binary search on s to find line[i] such that x[j] lies in line[i].range output line[i].indexendComplexity of the solution is [math]O((N+M) \log M)[/math].
