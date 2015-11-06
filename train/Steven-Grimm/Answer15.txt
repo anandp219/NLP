@@ -1,0 +1,1 @@
+The Pleco reader feature has dictionary integration built in  so I can tap on an unfamiliar word and get a definition (and even add the word to my flashcard list if I want) without losing the flow of the story. Trying to read a paper book using a separate dictionary to look up new words is far  far less engrossing  not to mention much slower.

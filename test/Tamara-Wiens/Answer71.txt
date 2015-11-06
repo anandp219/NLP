@@ -1,0 +1,1 @@
+That gives you complete control  as you are likely to have lots of bugs  and crashes  not because you're bad at it  but because that's the reality of infrastructure like this  which is very new  is that it has lots of defects and unanticipated challenges to overcome.

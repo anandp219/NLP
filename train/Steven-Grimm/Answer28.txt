@@ -1,0 +1,1 @@
+You've probably seen the Knuth quote about premature optimization (even though it's usually quoted out of context). Answering the high-level questions is how you know when little fiddly kinds of optimization are no longer premature.

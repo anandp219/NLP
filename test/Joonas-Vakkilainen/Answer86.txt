@@ -1,0 +1,1 @@
+The physical side of the volume of a sound is called 'amplitude'. It is measured in dB. The perceptual side of this is 'loudness'  it tells the impression that the listener gets from the amplitude of the sound in question.

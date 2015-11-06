@@ -1,0 +1,1 @@
+But something like this was roughly in my head. Certain topics were dependent on others  and certain topics were just less complex and should be discussed earlier. A lot of chapters  especially within algorithms  could be discussed in any order.

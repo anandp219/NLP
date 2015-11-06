@@ -1,0 +1,1 @@
+ROOT does a fantastic job with compression and normally databases cannot handle this shit. [1] Welcome to the Worldwide LHC Computing Grid[2] http://cds.cern.ch/record/169540...[3] Large Hadron Collider[4] CERN LHC[5] The Grid: A system of tiers[6] http://atlas.web.cern.ch/Atlas/G...[7] Page on gantep.edu.tr[8] ROOT Files | ROOT[9] TTree[10] TBranch[11] TLeaf

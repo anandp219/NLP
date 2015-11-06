@@ -1,0 +1,1 @@
+Is there code somewhere else that depends on something non-obvious here? Do customers prefer this approach to an obvious alternative? Is there a different approach that was considered but rejected? Bonus points if there's a bug number where I can read more.

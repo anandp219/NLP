@@ -1,0 +1,1 @@
+This ensures that you get the most important algorithmic parts done first. If you do things this way  it won't really matter whether or not you can use the built-in library functions. Use them--and make up your own functions as you need. You can fill in the details as you have time.

@@ -1,0 +1,1 @@
+It is easy to see that  with cooperation  our recurrence simplifies further:rightwin(i k) = 1IFFthere exists k':i<k'<k such that rightwin(i k') = rightwin(k' k) = 1ANDi or k can defeat k'We can evaluate the rightwin(i k) table thus in O(N) time. Since N100  this should be quick enough.
