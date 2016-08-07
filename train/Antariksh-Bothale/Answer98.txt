@@ -1,1 +1,0 @@
-[1] I deliberately refrain from calling them 'rules' since most people interpret that as a normative statement about language  which it isn't. The term correctness conditions has been taken from Ideology  Power  and Linguistic Theory by Prof G. K. Pullum.

@@ -1,1 +1,0 @@
-(There are other tools for that kind of thing  I just happen to like that one.) Also take a look at the password-reset strategies used for all of your email accounts  and make sure that they involve sending email to accounts that have recently-changed strong passwords.And in the future  use an encrypted USB drive  so that this won't happen again.

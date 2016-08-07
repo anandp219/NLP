@@ -1,1 +1,0 @@
-I want this book to be as language agnostic as possible. The point is the algorithms  not the code.Third  for the purposes of this book  having explicit typing makes it easier for people to understand what's going on. It removes some of the ambiguity when reading written code. However  you can view or contribute solutions in other languages at gaylemcd/ctci.

@@ -1,1 +1,0 @@
-1 2 3 4 5 6 7 8 91011121314//(1<<16)-1 is the mask corresponding to all the 16 primesfullmask=(1<<16)-1calc(n fullmask);//Build the b_i s backwardsvector<int> b_out;for(int i=n mask=fullmask;i>0;i--){ int cur=b[i][mask]; b_out.push_back(cur);  //Remove the factors of cur from the mask and continue mask^=factormask[cur];}Output b_out in reversed order and we are done.

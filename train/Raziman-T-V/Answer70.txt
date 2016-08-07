@@ -1,1 +1,0 @@
-That is [math]E = 1 + \sum\limits_{i=1}^{N-1} \frac{w_i}{w_0+w_i}[/math]Intuitive  isn't it? Although I have to admit that hindsight is 20/20. I thought of this only after seeing the solution  and perhaps couldn't have come up with it myself during the contest.

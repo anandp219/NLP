@@ -1,1 +1,0 @@
-[One notable point: ideally  Quora would have the ability not only to merge questions  but also to separate them  and then "sort" the answers onto the split pages A and B. Site admins - back when they existed - asked for this feature repeatedly  but it wasn't a high priority. Hopefully one day it will be  as this situation is far from uncommon.]

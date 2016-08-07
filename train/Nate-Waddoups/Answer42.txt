@@ -1,1 +1,0 @@
-I think of it as a helpful reminder.The remote-device-wipe feature is the only thing that is potentially dangerous. Apps are only really required to wipe the content that came from the Exchange server  but many apps will do a factory reset instead. But the other content on your device will NOT be accessible to your Exchange administrators.

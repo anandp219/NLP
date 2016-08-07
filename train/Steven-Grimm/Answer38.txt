@@ -1,1 +1,0 @@
-If you're familiar with git already  it shouldn't be too much work since the two have very similar underlying conceptual models.But in general  don't stress out too much about it. Facebook fully expects interns to spend time learning on the job; that's one of the points of having an internship program in the first place.

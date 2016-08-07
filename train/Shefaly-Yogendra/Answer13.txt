@@ -1,1 +1,0 @@
-I am cautiously optimistic about the new feature "ask Quora" just rolled out last week. 3. Instead of letting such questions stand and emerge repeatedly  they should be directed to a repository of the best answers on the matter. To some extent  the merge feature allows that but it still depends on us human users. This should be automate-able with some effort.

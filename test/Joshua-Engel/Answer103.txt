@@ -1,1 +1,0 @@
-That's well above the Abbe limit  in the range of about .1 millimeters (100 000 nanometers). The Abbe limit comes into play for microscopes  which can be bigger and better controlled than your eye; their limit is closer to 500 nanometers. Various techniques can be used to beat the Abbe limit with machinery  physics  and chemistry  but your eye will never come anywhere close.
